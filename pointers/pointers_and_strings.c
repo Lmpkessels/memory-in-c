@@ -86,6 +86,6 @@ char *string_copy(char *destination, const char *source) {
 }
 
 int main() {
-    printf("%d\n", copy_string());
+    copy_string();
     printf("%s\n", string_copy(stringB, stringA));
 }
