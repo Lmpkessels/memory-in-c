@@ -3,6 +3,7 @@
 char dest[40] = "Hello";
 char source[40] = "Hello, World!";
 
+// Count length of string through indexing and incrementing.
 size_t str_length(const char *s) {
     size_t len = 0;
 
