@@ -1,8 +1,13 @@
 #include <stdio.h>
+#include <string.h>
 
 int arr[10] = {0, 1, 4, 2, 3, 7, 9, 8, 10, 11};
 
-void bubble(int *p, int N);
+// data-type int goes from int to void such that there can be worked with any
+// data.
+//
+// A size type is add such that, its known what size there's been worked with.
+void bubble(void *p, size_t width, int N);
 
 // Use void for data type independency.
 int compare(void *m, void *n);
@@ -15,7 +20,8 @@ int main(void) {
         printf("%d\n", arr[i]);
     }
 
-    bubble(arr, 10);
+    // The size type is given 'long'.
+    bubble(arr, sizeof(long), 10);
     putchar("\n");
 
     for (i = 0; i < 10; i++) {
@@ -30,8 +36,12 @@ int main(void) {
 //
 // Then indexes through the array and compares neighbours the greatest will
 // move to the right.
-void bubble(int *p, int N) {
-    int i, j, t;
+void bubble(void *p, size_t width, int N) {
+    int i, j;
+    // Buf width is a buffer of 'size_t width' in bytes equaling the size of long.
+    unsigned char buf[width];
+    // Point to the array.
+    unsigned char *bp = p;
 
     // N goes from 10 down to 0 till its equal (controll how much the array
     // is unsorted).
@@ -40,10 +50,18 @@ void bubble(int *p, int N) {
         // comparing neighbours).
         for (j = 1; j <= i; j++) {
             // Compare neighbours and move the greater on to the right.
-            if (compare((void *)&p[j-1], (void *)&p[j])) {
-                t = p[j-1];
-                p[j-1] = p[j];
-                p[j] = t;
+            // Instead of indexing now pointer arithmetic is used, so first point
+            // to index 0, then 1, move up till done.
+            // Dereference to access the addresses in memory.
+            if (compare((void *)(bp + width*(j-1)), (void *)(bp + j*width))) {
+                // t = p[j-1];
+                // Copy from from the source buffer into the destination buffer 
+                // with the greater neighbour on the right.
+                memcpy(buf, bp + width*(j-1), width);
+                // p[j-1] = p[j];
+                memcpy(bp + width*(j-1), bp + j*width, width);
+                // p[j] = t;
+                memcpy(bp + j*width, buf, width);
             }
         }
     }
