@@ -1,13 +1,22 @@
 #include <stdio.h>
 #include <string.h>
 
-int arr[10] = {0, 1, 4, 2, 3, 7, 9, 8, 10, 11};
+#define MAX_BUF 256 // Buffer of max 256 bits.
+
+// Array with a capacity of 5 arrays with 20 indices.
+char arr2d[5][20] = {
+    "Peter Franken",
+    "Jason Stathem",
+    "Dennis M Ritchie",
+    "John Jones",
+    "John D Rockefeller"
+};
 
 // data-type int goes from int to void such that there can be worked with any
 // data.
 //
-// A size type is add such that, its known what size there's been worked with.
-void bubble(void *p, size_t width, int N);
+// data-type size_t goes to int such that the range is declared at runtime.
+void bubble(void *p, int width, int N);
 
 // Use void for data type independency.
 int compare(void *m, void *n);
@@ -17,15 +26,16 @@ int main(void) {
     putchar("\n");
 
     for (i = 0; i < 10; i++) {
-        printf("%d\n", arr[i]);
+        printf("%s\n", arr2d[i]);
     }
 
     // The size type is given 'long'.
-    bubble(arr, sizeof(long), 10);
+    bubble(arr2d, 20, 10);
+    putchar("\n");
     putchar("\n");
 
     for (i = 0; i < 10; i++) {
-        printf("%d\n", arr[i]);
+        printf("%s\n", arr2d[i]);
     }
 
     return 0;
@@ -36,10 +46,10 @@ int main(void) {
 //
 // Then indexes through the array and compares neighbours the greatest will
 // move to the right.
-void bubble(void *p, size_t width, int N) {
-    int i, j;
-    // Buf width is a buffer of 'size_t width' in bytes equaling the size of long.
-    unsigned char buf[width];
+void bubble(void *p, int width, int N) {
+    int i, j, k;
+    // Buf width is a buffer of '256 bytes'.
+    unsigned char buf[MAX_BUF];
     // Point to the array.
     unsigned char *bp = p;
 
@@ -69,12 +79,9 @@ void bubble(void *p, size_t width, int N) {
 
 // Compare and return the greater index in the array.
 int compare(void *m, void *n) {
-    // Create two pointers.
-    int *m1, *n1;
-    // Type cast, m1 is a pointer to m.
-    m1 = (int *)m;
-    // Type cast, n1 is a pointer to n.
-    n1 = (int *)n;
-    // Access locations in memory compare them and return greatest.
-    return (*m1 > *n1);
+    // Create two pointers pointing to 'm' and 'n'.
+    char *m1 = m;
+    char *n1 = n;
+    // Compare m1 and n1 and return the greatest.
+    return (strcmp(m1, n1));
 }
