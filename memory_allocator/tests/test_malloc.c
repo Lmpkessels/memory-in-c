@@ -3,8 +3,8 @@
 
 // If memory is full return error message, else return the address.
 int main() {
-    size_t data = 100;
-    int *ptr = malloc(data);
+    size_t size = 100;
+    int *ptr = malloc(size);
 
     if (ptr == NULL) {
         printf("Memory allocation failed\n");

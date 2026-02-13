@@ -3,10 +3,10 @@
 #include <stdlib.h>
 
 // If there's enough memory return the block; else return NULL.
-void *malloc(size_t data) {
+void *malloc(size_t size) {
     void *block;
 
-    block = sbrk(data); // Ask OS for block of size data.
+    block = sbrk(size); // Ask OS for block of size data.
     
 
     if (block == (void*) -1) { // If OS cannot allocate memory signal
