@@ -47,7 +47,7 @@ void *malloc(size_t size) {
         head = header;
     }
 
-    // Next tail is header when tail.
+    // Next header is tail when tail.
     if (tail) {
         tail->s.next = tail;
     }
