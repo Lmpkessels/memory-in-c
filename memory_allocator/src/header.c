@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <bits/pthreadtypes.h>
 
 // A header is needed for every newly allocated memory block such that it 
 // can be found to free it.
@@ -19,7 +20,7 @@ union header {
         size_t size; // Size of block.
         unsigned is_free; // To see if block is free.
         struct header_t *next; // To keep track of the block.
-    } s;
+    } s; // Is used to get access to structure.
     ALIGN stub;
 };
 
