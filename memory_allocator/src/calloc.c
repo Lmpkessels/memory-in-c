@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "malloc.h"
 
 // Allocates memory for an array of 'num' elements, of 'nsize' of, bytes each.
 //
